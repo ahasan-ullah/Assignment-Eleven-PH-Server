@@ -76,6 +76,14 @@ async function run() {
       res.send(result);
     })
 
+    // get food list by email address
+    app.get('/allFoods/:email',async(req,res)=>{
+      const email=req.params.email;
+      const query={"addBy.email": email};
+      const result=await allFoods.find(query).toArray();
+      res.send(result);
+    })
+
 
 
 
