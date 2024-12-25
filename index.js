@@ -3,7 +3,7 @@ const cors=require('cors');
 require('dotenv').config();
 const jwt=require('jsonwebtoken');
 const cookieparser=require('cookie-parser');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app=express();
 const port=process.env.PORT || 5000;
@@ -44,6 +44,14 @@ async function run() {
       .skip(page*size)
       .limit(size)
       .toArray();
+      res.send(result);
+    })
+
+    // single food by id
+    app.get('/foods/:id',async(req,res)=>{
+      const id=req.params.id;
+      const query={_id: new ObjectId(id)};
+      const result=await allFoods.findOne(query);
       res.send(result);
     })
 
