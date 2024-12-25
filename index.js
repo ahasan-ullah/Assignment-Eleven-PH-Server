@@ -84,6 +84,14 @@ async function run() {
       res.send(result);
     })
 
+    // get order list by email address
+    app.get('/myOrders/:email',async(req,res)=>{
+      const email=req.params.email;
+      const query={email: email};
+      const result=await purchasedFood.find(query).toArray();
+      res.send(result);
+    })
+
 
 
 
