@@ -34,6 +34,7 @@ async function run() {
   try {
     //Database
     const allFoods=client.db('hungryNakiDB').collection('foods');
+    const purchasedFood=client.db('hungryNakiDB').collection('purchasedFood');
 
     // allfoods
     app.get('/foods',async(req,res)=>{
@@ -59,6 +60,20 @@ async function run() {
     app.get('/productsCount',async(req,res)=>{
       const count=await allFoods.estimatedDocumentCount();
       res.send({count});
+    })
+
+    //purchased food to db
+    app.post('/purchasedFood',async(req,res)=>{
+      const food=req.body;
+      const result=purchasedFood.insertOne(food);
+      res.send(result);
+    })
+
+    //getting purchased product
+    app.get('/purchasedFood',async(req,res)=>{
+      const cursor=purchasedFood.find();
+      const result=await cursor.toArray();
+      res.send(result);
     })
 
 
