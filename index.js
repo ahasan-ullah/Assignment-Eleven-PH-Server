@@ -57,7 +57,7 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await allFoods.findOne(query);
-      res.send(result);
+      res.send([]);
     });
 
     // update a product
@@ -66,7 +66,6 @@ async function run() {
       const food = req.body;
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
-      console.log(food);
       const updatedFood = {
         $set: {
           foodName: food.foodName,
@@ -132,12 +131,12 @@ async function run() {
     });
 
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
   } finally {
     // Ensures that the client will close when you finish/error
     //await client.close();
