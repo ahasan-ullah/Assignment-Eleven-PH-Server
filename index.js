@@ -57,7 +57,7 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await allFoods.findOne(query);
-      res.send([]);
+      res.send(result);
     });
 
     // update a product
