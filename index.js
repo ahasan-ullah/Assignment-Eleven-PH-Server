@@ -60,6 +60,7 @@ async function run() {
       res.send(result);
     });
 
+    // update a product
     app.put("/foods/:id", async (req, res) => {
       const id = req.params.id;
       const food = req.body;
@@ -75,10 +76,10 @@ async function run() {
           price: food.price,
           foodOrigin: food.foodOrigin,
           "description.ingredients": food.description?.ingredients,
-          "description.makingProcedure": food.description?.makingProcedure
-          }
+          "description.makingProcedure": food.description?.makingProcedure,
+        },
       };
-      const result=await allFoods.updateOne(filter,updatedFood,options);
+      const result = await allFoods.updateOne(filter, updatedFood, options);
       res.send(result);
     });
 
@@ -116,6 +117,18 @@ async function run() {
       const query = { email: email };
       const result = await purchasedFood.find(query).toArray();
       res.send(result);
+    });
+
+    //delete a product
+    app.delete("/myOrders/:email", async (req, res) => {
+      const email = req.params.email;
+      const bodyEmail = req.body.email;
+      const id = req.body.id;
+      if (email === bodyEmail) {
+        const query = { _id: new ObjectId(id) };
+        const result = await purchasedFood.deleteOne(query);
+        // res.send(result);
+      }
     });
 
     // Connect the client to the server	(optional starting in v4.7)
