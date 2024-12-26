@@ -48,6 +48,12 @@ async function run() {
       res.send(result);
     })
 
+    app.post('/foods',async(req,res)=>{
+      const food=req.body;
+      const result=await allFoods.insertOne(food);
+      res.send(result);
+    })
+
     // single food by id
     app.get('/foods/:id',async(req,res)=>{
       const id=req.params.id;
